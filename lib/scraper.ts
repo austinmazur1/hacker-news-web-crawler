@@ -1,12 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-
-interface HackerNewsEntry {
-    order: number;
-    title: string;
-    points: number;
-    comments: number;
- }
+import { HackerNewsEntry } from "@/types/hackerNewsEntryTypes";
 
 export async function scrapeHackerNews() {
   try {
