@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## This is a Next.js project, built to scrape ycombinator site for first 30 entries.
 
-## Getting Started
+### Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+```
+
+Next add URI for mongodb to `.env`
+
+Start server:
+
+```
+bash npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Requirements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Web crawler using scraping technique to extract first 30 entries from [Y Combinator](https://news.ycombinator.com/). Only getting the **number**, **title**, **points**, **number of comments**.
 
-## Learn More
+- Filter all prev entries with **more than five words in title**, ordered by the number of comments first
 
-To learn more about Next.js, take a look at the following resources:
+- Filter all prev entries with **less than or equal to five words in title**, ordered by points.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- For counting words, we only consider **spaced words** and excluding any **symbols**.
+  (e.g. “This is - a self-explained example”).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Include a storage solution to track the user interaction and usage behavior (e.g request timestamp, the filter applied, etc.).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Implement automated testing.
