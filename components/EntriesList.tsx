@@ -1,5 +1,4 @@
-import { HackerNewsEntry } from "@/types/hackerNewsEntryTypes";
-
+import { HackerNewsEntry } from "@/lib/scraper";
 interface EntriesProps {
   filteredEntries: HackerNewsEntry[];
 }

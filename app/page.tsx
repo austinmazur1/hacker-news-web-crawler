@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { scrapeHackerNews } from "@/lib/scraper";
 import {
   filterLongTitlesByComments,
@@ -5,6 +6,8 @@ import {
 } from "@/lib/utils";
 import FilterSelector from "@/components/FilterSelector";
 import EntriesList from "@/components/EntriesList";
+// import {sendUsageData} from "@/services/usageData"
+import { sendUsageData } from "@/lib/storage";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[]>>;
@@ -17,6 +20,13 @@ export default async function Page({ searchParams }: PageProps) {
     ? params.filter[0]
     : params.filter || "none"; // Ensure filter is a string
 
+    // Get user agent
+    const headersList = await headers()
+    const userAgent = headersList.get("user-agent") || "unknown";
+
+    // Measure request and response time
+    const requestTimestamp = Date.now();
+
   // Fetch the Hacker News entries
   const entries = await scrapeHackerNews();
 
@@ -26,6 +36,20 @@ export default async function Page({ searchParams }: PageProps) {
   } else if (filter === "less-than-five") {
     filteredEntries = filterShortTitlesByPoints(entries);
   }
+
+  const responseTimestamp = Date.now();
+  const duration = responseTimestamp - requestTimestamp;
+  // Send usage data to the server
+
+
+  await sendUsageData({
+    requestTimestamp,
+    responseTimestamp,
+    duration,
+    entryCount: entries.length,
+    userAgent,
+    filterApplied: filter,
+  });
 
   return (
     <div className="m-16">

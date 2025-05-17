@@ -1,4 +1,4 @@
-import { HackerNewsEntry } from "@/types/hackerNewsEntryTypes";
+import { HackerNewsEntry } from "@/lib/scraper";
 
 const countWords = (title: string): number => {
   const words = title
