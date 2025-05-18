@@ -58,3 +58,7 @@ export async function scrapeHackerNews() {
     return [];
   }
 }
+
+export function __clearCacheForTests() { 
+  cache.clear();
+}
