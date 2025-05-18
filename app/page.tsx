@@ -6,7 +6,7 @@ import {
 } from "@/lib/utils";
 import FilterSelector from "@/components/FilterSelector";
 import EntriesList from "@/components/EntriesList";
-// import {sendUsageData} from "@/services/usageData"
+
 import { sendUsageData } from "@/lib/storage";
 
 interface PageProps {
@@ -20,7 +20,6 @@ export default async function Page({ searchParams }: PageProps) {
     ? params.filter[0]
     : params.filter || "none"; // Ensure filter is a string
 
-    // Get user agent
     const headersList = await headers()
     const userAgent = headersList.get("user-agent") || "unknown";
 
@@ -39,8 +38,6 @@ export default async function Page({ searchParams }: PageProps) {
 
   const responseTimestamp = Date.now();
   const duration = responseTimestamp - requestTimestamp;
-  // Send usage data to the server
-
 
   await sendUsageData({
     requestTimestamp,

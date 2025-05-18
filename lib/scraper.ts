@@ -54,7 +54,6 @@ export async function scrapeHackerNews() {
     cache.set(cacheKey, { data: entries, expiry: Date.now() + CACHE_DURATION });
     return entries;
   } catch (error) {
-    console.error("Error scraping Hacker News:", error);
     return [];
   }
 }
