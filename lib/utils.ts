@@ -1,6 +1,6 @@
 import { HackerNewsEntry } from "@/lib/scraper";
 
-const countWords = (title: string): number => {
+export const countWords = (title: string): number => {
   const words = title
     .trim() // Remove leading and trailing whitespace
     .split(/\s+/) // Split by whitespace

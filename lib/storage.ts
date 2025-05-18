@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Usage from "@/models/UsageData";
+import Usage from "../models/UsageData";
 
 export interface IUsage {
     requestTimestamp: number;
