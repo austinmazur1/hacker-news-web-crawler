@@ -32,6 +32,6 @@ const UsageSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Usage = mongoose.model("Usage", UsageSchema);
+const Usage = mongoose.models.Usage || mongoose.model("Usage", UsageSchema);
 
 export default Usage;

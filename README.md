@@ -40,7 +40,7 @@ I had some trial and error with setting up and implementing the tests with Jest.
 
 When first thinking of the data fetching, I thought of creating an API route and calling it from our main page. But then I was thinking of SSR and ultimately went that path. One thing that was on my mind though was that I didn't want to keep scraping data every time there was a reload on the page. To avoid this, I added caching (5min).
 
-Although web scrapers are often implemented as CLI scripts, I chose to build a Next.js web app to leverage my knowledge and experience with JS, TS and Next.js. Being new to scraping, this allowed me to integrate the scrapper into a familiar framework and have a user-friendly UI to display the data and change the filtering methods as per the requirements.
+Although web scrapers are often implemented as CLI scripts, I chose to build a Next.js web app to leverage my knowledge and experience with JS, TS and Next.js. Being new to scraping, this allowed me to integrate the scraper into a familiar framework and have a user-friendly UI to display the data and change the filtering methods as per the requirements.
 
 Going forward, this exercise sparked a desire to learn and practice more with implementing tests. Even making some personal project trying TDD. Along with that, research more about web crawlers and scraping techniques and the best practices that go along with them.
 

@@ -2,9 +2,10 @@ import { HackerNewsEntry } from "@/lib/scraper";
 
 export const countWords = (title: string): number => {
   const words = title
+    .replace(/[^\w\s]/g,'')
     .trim() // Remove leading and trailing whitespace
     .split(/\s+/) // Split by whitespace
-    .filter((word) => word.match(/^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/)); // Filter out non-alphanumeric words
+    .filter((word) => word.length > 0) // Filter out empty strings
 
   return words.length;
 };
