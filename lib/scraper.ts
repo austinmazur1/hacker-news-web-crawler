@@ -1,10 +1,30 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { HackerNewsEntry } from "@/types/hackerNewsEntryTypes";
+export interface HackerNewsEntry {
+  order: number;
+  title: string;
+  points: number;
+  comments: number;
+}
+
+// Cache to store the scraped data
+const cache = new Map<string, { data: HackerNewsEntry[]; expiry: number }>();
+const CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
 
 export async function scrapeHackerNews() {
+  // Check if we have cached data
+  const cacheKey = "hacker-news-entries";
+  const cachedData = cache.get(cacheKey);
+  if (cachedData && cachedData.expiry > Date.now()) {
+    console.log("Using cached data");
+    return cachedData.data;
+  }
   try {
-    const response = await axios.get("https://news.ycombinator.com/");
+    const response = await axios.get("https://news.ycombinator.com/", {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; HackerNewsScraper/1.0)",
+      },
+    });
     const $ = cheerio.load(response.data);
     const entries: HackerNewsEntry[] = [];
 
@@ -30,9 +50,14 @@ export async function scrapeHackerNews() {
         entries.push({ order, title, points, comments });
       });
 
+    // Cache data
+    cache.set(cacheKey, { data: entries, expiry: Date.now() + CACHE_DURATION });
     return entries;
   } catch (error) {
-    console.error("Error scraping Hacker News:", error);
     return [];
   }
+}
+
+export function __clearCacheForTests() { 
+  cache.clear();
 }

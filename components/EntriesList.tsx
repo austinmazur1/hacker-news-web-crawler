@@ -1,9 +1,17 @@
-import { HackerNewsEntry } from "@/types/hackerNewsEntryTypes";
-
+import { HackerNewsEntry } from "@/lib/scraper";
 interface EntriesProps {
   filteredEntries: HackerNewsEntry[];
 }
 export default function EntriesList({ filteredEntries }: EntriesProps) {
+  if (!filteredEntries || filteredEntries.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-2xl font-bold">No entries found</h1>
+        <p className="text-sm text-gray-500">Please try a different filter.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {filteredEntries.map((entry) => (

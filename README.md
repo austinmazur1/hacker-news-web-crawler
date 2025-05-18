@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## This is a Next.js project, built to scrape ycombinator site for first 30 entries.
 
-## Getting Started
+This project implements a web scraper to extract the first 30 entries from [Y Combinator](https://news.ycombinator.com/). I decided to utilize my skills and knowledge with Next.js to create a user-friendly interface for displaying the scraped data and filtering.
 
-First, run the development server:
+The scraper uses axios to `axios` `cheerio` to fetch and parse the data, I utilize caching in order to not make redundant and unnecessary requests so frequently.
+
+I use `Jest` in order to test the scraper, filtering functions and the db integration.
+
+### Getting Started
+
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+```
+
+#### Next add URI for mongodb to `.env`
+
+Start server:
+
+```bash
+ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run test
+# or
+npm run test:watch
+```
 
-## Learn More
+### Takeaways
 
-To learn more about Next.js, take a look at the following resources:
+Having little experience with scraping techniques as well as implementing tests, I found this to be a good opportunity to learn more and get some practice in.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I had some trial and error with setting up and implementing the tests with Jest. I was able to test the core functionalities (scraper, db, filtering functions). But when it came to adding tests for the UI, I ran into some issues. It appeared to be a mix of TS config issues, ECM syntax differences and Jest config. While I am content I got the other tests running and passing, I will continue to seek what I was missing so I can add those other tests.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+When first thinking of the data fetching, I thought of creating an API route and calling it from our main page. But then I was thinking of SSR and ultimately went that path. One thing that was on my mind though was that I didn't want to keep scraping data every time there was a reload on the page. To avoid this, I added caching (5min).
 
-## Deploy on Vercel
+Although web scrapers are often implemented as CLI scripts, I chose to build a Next.js web app to leverage my knowledge and experience with JS, TS and Next.js. Being new to scraping, this allowed me to integrate the scraper into a familiar framework and have a user-friendly UI to display the data and change the filtering methods as per the requirements.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Going forward, this exercise sparked a desire to learn and practice more with implementing tests. Even making some personal project trying TDD. Along with that, research more about web crawlers and scraping techniques and the best practices that go along with them.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Requirements
+
+- Web crawler using scraping technique to extract first 30 entries from [Y Combinator](https://news.ycombinator.com/). Only getting the **number**, **title**, **points**, **number of comments**.
+
+- Filter all prev entries with **more than five words in title**, ordered by the number of comments first
+
+- Filter all prev entries with **less than or equal to five words in title**, ordered by points.
+
+- For counting words, we only consider **spaced words** and excluding any **symbols**.
+  (e.g. “This is - a self-explained example”).
+
+- Include a storage solution to track the user interaction and usage behavior (e.g request timestamp, the filter applied, etc.).
+
+- Implement automated testing.
